@@ -50,46 +50,7 @@ const rpc = async function setActivity(client) {
 		};
 	});
 
-	const meowAPIResponse = await axios({
-		method: "GET",
-		url: `${apis.meowAPI.base_url}/profile/${settings.player.player_tag.replace("#", "")}`,
-		headers: {
-			"Content-Type": "application/json",
-			"User-Agent": `${name}/${version}`
-		}
-	}).catch((error) => {
-		logger.error(`An error has occurred. Report this at ${bugs.url} !`);
-
-		logErrorAndExit(`ERROR: ${error.response.status} - ${error.response.statusText}`);
-	});
-
-	const player = {
-		...brawlstarsResponse.data,
-		...meowAPIResponse.data.response
-	};
-
-	const rankedRanks = [
-		"Bronze I",
-		"Bronze II",
-		"Bronze III",
-		"Silver I",
-		"Silver II",
-		"Silver III",
-		"Gold I",
-		"Gold II",
-		"Gold III",
-		"Diamond I",
-		"Diamond II",
-		"Diamond III",
-		"Mythic I",
-		"Mythic II",
-		"Mythic III",
-		"Legendary I",
-		"Legendary II",
-		"Legendary III",
-		"Masters",
-		"Pro"
-	];
+	const player = brawlstarsResponse.data;
 
 	const app = await gplay.app({
 		appId: "com.supercell.brawlstars"
@@ -98,8 +59,8 @@ const rpc = async function setActivity(client) {
 	client.request("SET_ACTIVITY", {
 		pid: process.pid,
 		activity: {
-			details: `🏆 Trophies: ${player.trophies}/${player.highestTrophies} • 🏅 Rank: ${rankedRanks[player.Stats["23"] - 1]}/${player.Stats["22"] === 0 ? rankedRanks[player.Stats["22"]] : rankedRanks[player.Stats["22"] - 1]}`,
-			state: `🥊 3 vs 3 Victories: ${player["3vs3Victories"]} • 👤 Solo Victories: ${player.soloVictories} • 👥 Duo Victories: ${player.duoVictories} • 🔥 Max Win Streak: ${player.WinStreak}`,
+			details: `🏆 Trophies: ${player.trophies}/${player.highestTrophies}`,
+			state: `🥊 3 vs 3 Victories: ${player["3vs3Victories"]} • 👤 Solo Victories: ${player.soloVictories} • 👥 Duo Victories: ${player.duoVictories}`,
 			timestamps: {
 				start: startDate
 			},

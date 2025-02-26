@@ -2,9 +2,6 @@
 	"apis": {
 		"brawlstars": {
 			"base_url": "https://api.brawlstars.com/v1"
-		},
-		"meowAPI": {
-			"base_url": "https://api.hpdevfox.ru"
 		}
 	},
 	"auth": {
