@@ -11,7 +11,7 @@ const ready = {
 
 		setInterval(() => {
 			rpc(client);
-		}, 30000);
+		}, 10000);
 
 		logger.info("Rich Presence connected to Discord!");
 	}
