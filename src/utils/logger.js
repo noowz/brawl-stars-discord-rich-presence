@@ -1,35 +1,64 @@
-const chalk = require("chalk");
+const { magenta, cyan, yellow, red, bold, gray } = require("chalk");
 
 const levels = {
-    debug: chalk.bold.blueBright,
-    info: chalk.bold.cyanBright,
-    warn: chalk.bold.hex("#F0AD4E"),
-    error: chalk.bold.redBright,
-    fatal: chalk.bold.red
+	debug: magenta,
+	info: cyan,
+	warn: yellow,
+	error: red,
+	fatal: bold.red,
+	application: bold.blue
 };
 
-function logMessage(level, message) {
-    const logColor = levels[level];
-    const logDate = chalk.gray(`[${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}]`);
-    const logLevel = `[${level.toUpperCase()}]`;
+const levelPriority = {
+	debug: 0,
+	info: 1,
+	warn: 2,
+	error: 3,
+	fatal: 4,
+	application: 5
+};
 
-    if (level === "debug") {
-        return console.debug(logColor(`${logDate} ${logLevel}`), message);
-    } else if (level === "info") {
-        return console.info(logColor(`${logDate} ${logLevel}`), message);
-    } else if (level === "warn") {
-        return console.warn(logColor(`${logDate} ${logLevel}`), message);
-    } else if (level === "error" || level === "fatal") {
-        return console.error(logColor(`${logDate} ${logLevel}`), message);
-    };
+const envLogLevels = {
+	development: "debug",
+	production: "warn",
+	test: "error"
+};
+
+const currentEnv = process.env.NODE_ENV;
+const minLogLevel = envLogLevels[currentEnv];
+const minLogLevelPriority = levelPriority[minLogLevel];
+
+function logMessage(level, message) {
+	if (levelPriority[level] < minLogLevelPriority) {
+		return;
+	};
+
+	const logColor = levels[level];
+	const logDate = gray(`[${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}]`);
+	const logLevel = `[${level.toUpperCase()}]`;
+
+	const prefix = logColor(`${logDate} ${logLevel}`);
+
+	if (level === "debug") {
+		return console.debug(prefix, message);
+	} else if (level === "info") {
+		return console.info(prefix, message);
+	} else if (level === "warn") {
+		return console.warn(prefix, message);
+	} else if (level === "error" || level === "fatal") {
+		return console.error(prefix, message);
+	} else if (level === "application") {
+		return console.log(prefix, message);
+	};
 };
 
 const logger = {
-    debug: (message) => logMessage("debug", message),
-    info: (message) => logMessage("info", message),
-    warn: (message) => logMessage("warn", message),
-    error: (message) => logMessage("error", message),
-    fatal: (message) => logMessage("fatal", message)
+	debug: (message) => logMessage("debug", message),
+	info: (message) => logMessage("info", message),
+	warn: (message) => logMessage("warn", message),
+	error: (message) => logMessage("error", message),
+	fatal: (message) => logMessage("fatal", message),
+	application: (message) => logMessage("application", message)
 };
 
 module.exports = { logger };

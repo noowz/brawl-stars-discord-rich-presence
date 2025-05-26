@@ -1,7 +1,7 @@
 const { name, version, author, bugs } = require("../../package.json");
 const { logger } = require("../utils/logger.js");
 const { logErrorAndExit } = require("../utils/utils.js");
-const chalk = require("chalk");
+const { white, green, yellow, redBright, greenBright, blueBright } = require("chalk");
 const axios = require("axios");
 
 async function updateNotifier() {
@@ -30,14 +30,14 @@ async function updateNotifier() {
 	const latestVersion = release.tag_name.replace("v", "");
 
 	if (currentVersion < latestVersion) {
-		console.log(chalk.white("┌────────────────────────────────────────────────────────────────────────────────┐"));
-		console.log(chalk.white("│ ") + chalk.green("🚀 A new version of ") + chalk.yellow(name) + chalk.green(" is available!") + "            " + chalk.white("│"));
-		console.log(chalk.white("│") + "                                                                                " + chalk.white("│"));
-		console.log(chalk.white("│ ") + chalk.redBright(`• Current version: ${currentVersion}`) + "                                                       " + chalk.white("│"));
-		console.log(chalk.white("│ ") + chalk.greenBright(`• Latest version: ${latestVersion.replace("v", "")}`) + "                                                        " + chalk.white("│"));
-		console.log(chalk.white("│") + "                                                                                " + chalk.white("│"));
-		console.log(chalk.white("│ ") + chalk.blueBright(release.html_url) + " " + chalk.white("│"));
-		console.log(chalk.white("└────────────────────────────────────────────────────────────────────────────────┘"));
+		console.log(white("┌────────────────────────────────────────────────────────────────────────────────┐"));
+		console.log(white("│ ") + green("🚀 A new version of ") + yellow(name) + green(" is available!") + "            " + white("│"));
+		console.log(white("│") + "                                                                                " + white("│"));
+		console.log(white("│ ") + redBright(`• Current version: ${currentVersion}`) + "                                                       " + white("│"));
+		console.log(white("│ ") + greenBright(`• Latest version: ${latestVersion.replace("v", "")}`) + "                                                        " + white("│"));
+		console.log(white("│") + "                                                                                " + white("│"));
+		console.log(white("│ ") + blueBright(release.html_url) + " " + white("│"));
+		console.log(white("└────────────────────────────────────────────────────────────────────────────────┘"));
 		console.log("\n");
 	};
 };
