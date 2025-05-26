@@ -1,5 +1,5 @@
 const { name, version, bugs, repository } = require("../../package.json");
-const { apis, auth, settings } = require("../config.json");
+const { apis } = require("../config.json");
 const { logger } = require("../utils/logger.js");
 const { logErrorAndExit } = require("../utils/utils.js");
 const axios = require("axios");
@@ -10,13 +10,13 @@ let firstTimeRunningRichPresence = true;
 let startDate = firstTimeRunningRichPresence ? Date.now() : startDate;
 
 const rpc = async function setActivity(client) {
-	let meowAPIResponseNull = false;
+	let brawlAPINutellaResponseNull = false;
 
 	const brawlstarsResponse = await axios({
 		method: "GET",
-		url: `${apis.brawlstars.base_url}/players/%23${settings.player.player_tag.replace("#", "")}`,
+		url: `${apis.brawlstars.base_url}/players/%23${process.env.BRAWL_STARS_PLAYER_TAG.replace("#", "")}`,
 		headers: {
-			Authorization: `Bearer ${auth.brawlstars.api.token}`,
+			Authorization: `Bearer ${process.env.BRAWL_STARS_API_KEY}`,
 			"Content-Type": "application/json",
 			"User-Agent": `${name}/${version}`
 		}
@@ -52,22 +52,25 @@ const rpc = async function setActivity(client) {
 		};
 	});
 
-	const meowAPIResponse = await axios({
+	const brawlAPINutellaResponse = await axios({
 		method: "GET",
-		url: `${apis.meowAPI.base_url}/profile/${settings.player.player_tag.replace("#", "")}`,
+		url: `${apis.brawlAPINutella.base_url}/profile`,
+		params: {
+			tag: process.env.BRAWL_STARS_PLAYER_TAG.replace("#", "")
+		},
 		headers: {
 			"Content-Type": "application/json",
 			"User-Agent": `${name}/${version}`
-		}
+		},
 	}).catch((error) => {
 		if (error.response.status === 429) {
-			meowAPIResponseNull = true;
+			brawlAPINutellaResponseNull = true;
 
 			logger.error("Request was throttled, because amount of requests was above the threshold defined for the used API token.");
 
 			logger.error(`ERROR: ${error.response.status} - ${error.response.statusText} (${error.response.data.detail})`);
 		} else {
-			meowAPIResponseNull = true;
+			brawlAPINutellaResponseNull = true;
 
 			logger.error(`An error has occurred. Report this at ${bugs.url} !`);
 
@@ -75,17 +78,17 @@ const rpc = async function setActivity(client) {
 		};
 	});
 
-	if (!meowAPIResponseNull && meowAPIResponse.data.response === null) {
-		meowAPIResponseNull = true;
+	if (!brawlAPINutellaResponseNull && brawlAPINutellaResponse.data.result === null) {
+		brawlAPINutellaResponseNull = true;
 
-		logger.warn("MeowAPI returned an empty response. Ignoring MeowAPI data.");
+		logger.warn("BrawlAPINutella returned an empty response. Ignoring BrawlAPINutella data.");
 	};
 
-	const player = meowAPIResponseNull ? {
+	const player = brawlAPINutellaResponseNull ? {
 		...brawlstarsResponse.data
 	} : {
 		...brawlstarsResponse.data,
-		...meowAPIResponse.data.response
+		...brawlAPINutellaResponse.data.result
 	};
 
 	const rankedRanks = [
@@ -120,8 +123,8 @@ const rpc = async function setActivity(client) {
 	client.request("SET_ACTIVITY", {
 		pid: process.pid,
 		activity: {
-			details: meowAPIResponseNull ? `🏆 Trophies: ${player.trophies}/${player.highestTrophies}` : `🏆 Trophies: ${player.trophies}/${player.highestTrophies} • 🏅 Rank: ${rankedRanks[player.Stats["23"] - 1]}/${player.Stats["22"] === 0 ? rankedRanks[player.Stats["22"]] : rankedRanks[player.Stats["22"] - 1]}`,
-			state: meowAPIResponseNull ? `🥊 3 vs 3 Victories: ${player["3vs3Victories"]} • 👤 Solo Victories: ${player.soloVictories} • 👥 Duo Victories: ${player.duoVictories}` : `🥊 3 vs 3 Victories: ${player["3vs3Victories"]} • 👤 Solo Victories: ${player.soloVictories} • 👥 Duo Victories: ${player.duoVictories} • 🔥 Max Win Streak: ${player.WinStreak}`,
+			details: brawlAPINutellaResponseNull ? `🏆 Trophies: ${player.trophies}/${player.highestTrophies}` : `🏆 Trophies: ${player.trophies}/${player.highestTrophies} • 🏅 Rank: ${rankedRanks[player.stats.find(stat => stat.stat_id === 23).value - 1]}/${player.stats.find(stat => stat.stat_id === 22).value === 0 ? rankedRanks[player.stats.find(stat => stat.stat_id === 22).value] : rankedRanks[player.stats.find(stat => stat.stat_id === 22).value - 1]}`,
+			state: brawlAPINutellaResponseNull ? `🥊 3 vs 3 Victories: ${player["3vs3Victories"]} • 👤 Solo Victories: ${player.soloVictories} • 👥 Duo Victories: ${player.duoVictories}` : `🥊 3 vs 3 Victories: ${player["3vs3Victories"]} • 👤 Solo Victories: ${player.soloVictories} • 👥 Duo Victories: ${player.duoVictories} • 🔥 Max Win Streak: ${player.max_winstreak}`,
 			timestamps: {
 				start: startDate
 			},

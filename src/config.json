@@ -3,25 +3,8 @@
 		"brawlstars": {
 			"base_url": "https://api.brawlstars.com/v1"
 		},
-		"meowAPI": {
-			"base_url": "https://api.hpdevfox.ru"
-		}
-	},
-	"auth": {
-		"discord": {
-			"rpc": {
-				"client_id": "839894528953810944"
-			}
-		},
-		"brawlstars": {
-			"api": {
-				"token": "YOUR API KEY"
-			}
-		}
-	},
-	"settings": {
-		"player": {
-			"player_tag": "YOUR PLAYER TAG"
+		"brawlAPINutella": {
+			"base_url": "https://api.rnt.dev"
 		}
 	}
 }
