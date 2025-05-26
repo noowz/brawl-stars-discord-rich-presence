@@ -20,7 +20,7 @@ const levelPriority = {
 
 const envLogLevels = {
 	development: "debug",
-	production: "warn",
+	production: "info",
 	test: "error"
 };
 

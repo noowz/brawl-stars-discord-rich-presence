@@ -1,6 +1,6 @@
 {
 	"name": "brawl-stars-discord-rich-presence",
-	"version": "1.0.6",
+	"version": "1.0.7",
 	"private": true,
 	"description": "Discord Rich Presence that shows on your profile your Brawl Stars statistics.",
 	"main": "src/index.js",
