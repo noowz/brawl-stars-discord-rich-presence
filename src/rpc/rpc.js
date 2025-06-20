@@ -123,7 +123,7 @@ const rpc = async function setActivity(client) {
 	client.request("SET_ACTIVITY", {
 		pid: process.pid,
 		activity: {
-			details: brawlAPINutellaResponseNull ? `🏆 Trophies: ${player.trophies}/${player.highestTrophies}` : `🏆 Trophies: ${player.trophies}/${player.highestTrophies} • 🏅 Rank: ${rankedRanks[player.stats.find(stat => stat.stat_id === 23).value - 1]}/${player.stats.find(stat => stat.stat_id === 22).value === 0 ? rankedRanks[player.stats.find(stat => stat.stat_id === 22).value] : rankedRanks[player.stats.find(stat => stat.stat_id === 22).value - 1]}`,
+			details: brawlAPINutellaResponseNull ? `🏆 Trophies: ${player.trophies}/${player.highestTrophies}` : `🏆 Trophies: ${player.trophies}/${player.highestTrophies} • 🏅 Rank: ${rankedRanks[player.stats.find(stat => stat.id === 23).value - 1]}/${player.stats.find(stat => stat.id === 22).value === 0 ? rankedRanks[player.stats.find(stat => stat.id === 22).value] : rankedRanks[player.stats.find(stat => stat.id === 22).value - 1]}`,
 			state: brawlAPINutellaResponseNull ? `🥊 3 vs 3 Victories: ${player["3vs3Victories"]} • 👤 Solo Victories: ${player.soloVictories} • 👥 Duo Victories: ${player.duoVictories}` : `🥊 3 vs 3 Victories: ${player["3vs3Victories"]} • 👤 Solo Victories: ${player.soloVictories} • 👥 Duo Victories: ${player.duoVictories} • 🔥 Max Win Streak: ${player.max_winstreak}`,
 			timestamps: {
 				start: startDate
