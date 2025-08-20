@@ -124,7 +124,7 @@ const rpc = async function setActivity(client) {
 		pid: process.pid,
 		activity: {
 			details: brawlAPINutellaResponseNull ? `🏆 Trophies: ${player.trophies}/${player.highestTrophies}` : `🏆 Trophies: ${player.trophies}/${player.highestTrophies} • 🏅 Rank: ${rankedRanks[player.stats.find(stat => stat.id === 23).value - 1]}/${player.stats.find(stat => stat.id === 22).value === 0 ? rankedRanks[player.stats.find(stat => stat.id === 22).value] : rankedRanks[player.stats.find(stat => stat.id === 22).value - 1]}`,
-			state: brawlAPINutellaResponseNull ? `🥊 3 vs 3 Victories: ${player["3vs3Victories"]} • 👤 Solo Victories: ${player.soloVictories} • 👥 Duo Victories: ${player.duoVictories}` : `🥊 3 vs 3 Victories: ${player["3vs3Victories"]} • 👤 Solo Victories: ${player.soloVictories} • 👥 Duo Victories: ${player.duoVictories} • 🔥 Max Win Streak: ${player.max_winstreak}`,
+			state: brawlAPINutellaResponseNull ? `🥊 3 vs 3 Victories: ${player["3vs3Victories"]} • 💀 Victories: ${player.soloVictories + player.duoVictories}` : `🥊 3 vs 3 Victories: ${player["3vs3Victories"]} • 💀 Victories: ${player.soloVictories + player.duoVictories} • 🔥 Max Win Streak: ${player.max_winstreak} • 👁️ Record Points: ${player.stats.find(stat => stat.id === 31).value} (Level ${player.stats.find(stat => stat.id === 32).value})`,
 			timestamps: {
 				start: startDate
 			},
