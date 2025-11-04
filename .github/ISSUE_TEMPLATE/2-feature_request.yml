@@ -1,0 +1,31 @@
+name: "✨ Feature Request"
+description: Suggest a new feature or an improvement.
+assignees:
+  - noowz
+labels:
+  - enhancement
+title: "✨ [Feature]: "
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Explain how this feature would work and why it is useful.
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature to you?
+      options:
+        - Low
+        - Medium
+        - High
+    validations:
+      required: true
+  - type: input
+    id: additional_context
+    attributes:
+      label: Additional context
+      description: Any other information, links, or references that might help.

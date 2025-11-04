@@ -1,0 +1,10 @@
+{
+	"apis": {
+		"brawlstars": {
+			"base_url": "https://api.brawlstars.com"
+		},
+		"brawlAPINutella": {
+			"base_url": "https://api.rnt.dev"
+		}
+	}
+}

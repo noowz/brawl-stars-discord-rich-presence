@@ -1,0 +1,69 @@
+name: "🐞 Bug Report"
+description: Report a bug or an unexpected behavior.
+assignees:
+  - noowz
+labels:
+  - bug
+title: "🐞 [Bug]: "
+body:
+  - type: textarea
+    id: reproduction_steps
+    attributes:
+      label: Reproduction steps
+      description: "How do you trigger this bug? Please walk us through it step by step."
+      value: |
+        1.
+        2.
+        3.
+        ...
+    validations:
+      required: true
+  - type: textarea
+    id: actual_behavior
+    attributes:
+      label: Actual behavior
+      description: What actually happens when you follow the reproduction steps?
+    validations:
+      required: true
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: Expected behavior
+      description: What should have happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Copy and paste any relevant log output.
+      render: shell
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: Provide screenshots to help illustrate the issue.
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      description: Which operating system are you using?
+      options:
+        - Windows
+        - Linux
+        - macOS
+    validations:
+      required: true
+  - type: input
+    id: project_version
+    attributes:
+      label: Project version
+      description: Which version of the project are you using?
+      placeholder: v1.0.0
+    validations:
+      required: true
+  - type: input
+    id: additional_comments
+    attributes:
+      label: Additional comments
+      description: Any other information you would like to provide.
