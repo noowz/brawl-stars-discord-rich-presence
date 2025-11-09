@@ -30,3 +30,11 @@ async function initializeClient() {
 };
 
 initializeClient();
+
+process.on("unhandledRejection", (error) => {
+	if (error?.message?.includes("connection closed")) {
+		return;
+	};
+
+	console.error("Unhandled promise rejection:", error);
+});

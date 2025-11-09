@@ -24,7 +24,7 @@ const rpc = async function setActivity(client) {
 	}).catch((error) => {
 		logger.error(error);
 
-		process.exit(1);
+		return;
 	});
 
 	const brawlAPINutellaResponse = await axios({
@@ -40,7 +40,7 @@ const rpc = async function setActivity(client) {
 	}).catch((error) => {
 		logger.error(error);
 
-		process.exit(1);
+		return;
 	});
 
 	if (!brawlAPINutellaResponseNull && brawlAPINutellaResponse.data.result === null) {

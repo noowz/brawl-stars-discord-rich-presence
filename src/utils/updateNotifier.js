@@ -15,7 +15,7 @@ async function updateNotifier() {
 	}).catch((error) => {
 		logger.error(error);
 
-		process.exit(1);
+		return;
 	});
 
 	const release = await response.data;
