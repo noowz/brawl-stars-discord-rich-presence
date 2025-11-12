@@ -11,7 +11,7 @@ const ready = {
 
 		setInterval(() => {
 			rpc(client);
-		}, 1 * 5000);
+		}, 6 * 1000);
 
 		logger.info(`Rich Presence ${greenBright("connected")} to Discord!`);
 	}
